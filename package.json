@@ -1,0 +1,24 @@
+{
+  "name": "images-to-ipfs",
+  "version": "0.1.0",
+  "description": "Receives requests from react-images-uploader-continued and uploads them to ipfs",
+  "main": "index.mjs",
+  "scripts": {
+    "start": "nodemon --experimental-modules -r dotenv/config index.mjs",
+    "standardize": "standard *.mjs --fix",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^6.2.0",
+    "express": "^4.16.4",
+    "greenlock-express": "^2.4.10",
+    "ipfs-http-client": "^27.1.0",
+    "multiparty": "^4.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.7",
+    "standard": "^12.0.1"
+  }
+}
