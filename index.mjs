@@ -15,17 +15,25 @@ if (!HTTP_PORT || !HTTPS_PORT) {
 }
 
 const app = express()
-app.use('/static', express.static('./static'))
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', req.headers.origin);
+	res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+	res.header('Access-Control-Allow-Headers', 'Content-Type, *');
+	res.setHeader('Access-Control-Allow-Credentials', 'true');
+
+	if (req.method === 'OPTIONS') {
+		res.sendStatus(200);
+		return;
+	}
+
+	next()
+})
 
 app.get('/*', (req, res) => {
   res.send('All systems go.')
 })
 
-app.post('/multiple', imagesUpload(
-  './server/static/multipleFiles',
-  `http://localhost:${HTTP_PORT}/static/multipleFiles`,
-  true
-))
+app.post('/multiple', imagesUpload())
 
 if (NODE_ENV === 'development') { app.listen(HTTP_PORT, () => { console.info(`App listening on port ${HTTP_PORT}`) }) } else {
   greenLock.create({
