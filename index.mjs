@@ -9,8 +9,13 @@ if (NODE_ENV !== 'production' && NODE_ENV !== 'development' && NODE_ENV !== 'sta
   process.exit()
 }
 
-if (!HTTP_PORT || !HTTPS_PORT) {
-  console.error(`Error: .env variable HTTP_PORT and HTTPS should be set.`)
+if (!HTTP_PORT) {
+  console.error(`Error: .env variable HTTP_PORT should be set.`)
+  process.exit()
+}
+
+if(NODE_ENV === 'production' && !HTTPS_PORT) {
+  console.error(`Error: .env variable HTTPS should be set.`)
   process.exit()
 }
 
@@ -30,7 +35,7 @@ app.use((req, res, next) => {
 })
 
 app.get('/*', (req, res) => {
-  res.send('All systems go.')
+  res.send('<h1>images to ipfs</h1> <p>All systems go.</p>')
 })
 
 app.post('/multiple', imagesUpload())

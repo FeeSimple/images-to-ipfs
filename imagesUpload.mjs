@@ -11,14 +11,14 @@ export default function imagesUpload () {
         return
       }
 
-      if (!files.imageFiles && files.imageFiles.length === 0) { res.sendStatus(400) }
+      if (!files.imageFiles && !files.imageFiles.length && files.imageFiles.length === 0) { res.sendStatus(400) }
 
       try {
         const respFiles = await Promise.all(files.imageFiles.map(async file => {
           const { path } = file
 					const data = fs.readFileSync(path)
           const result = await ipfs.add(data)
-          return `https://gateway.ipfs.io/ipfs/${result[0].hash}`
+          return `https://gateway.ipfs.io/ipfs/${result[0].hash}/`
         }))
         res.send(respFiles)
       } catch (err) {
